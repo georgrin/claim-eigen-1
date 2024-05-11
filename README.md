@@ -17,6 +17,9 @@ nano proxies.txt
 socks5://user:pass@host:port (построчно)
 
 Установите зависимости:
-pip install -r requirements.txt
+pip3 install -r requirements.txt
+
+Запуск:
+python3 main.py
 
 В качестве благодарности можно просто не менять our_operator.
