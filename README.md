@@ -22,4 +22,4 @@ pip3 install -r requirements.txt
 Запуск:
 python3 main.py
 
-В качестве благодарности можно просто не менять our_operator.
+В качестве благодарности можно просто не менять our_operator (0x9631af6a712D296FEdB800132EdcF08E493b12cD)
