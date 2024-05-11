@@ -1,3 +1,8 @@
+# Repo-specified
+config.py
+pk.txt
+proxies.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
