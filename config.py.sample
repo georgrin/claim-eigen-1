@@ -1,0 +1,4 @@
+USE_PROXY = 0
+ETH_NODE_RPC = "https://ethereum-rpc.publicnode.com"
+
+SLEEP_FROM, SLEEP_TO = 100, 200
