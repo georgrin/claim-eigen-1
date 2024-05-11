@@ -168,36 +168,41 @@ def main():
 
                             # Заявление наград
                             claim_data = credentials_data['claimData']
-                            #contract_address = Web3.to_checksum_address(claim_data['contractAddress'])
-                            #abi = claim_data['abi']
-                            #contract = w3.eth.contract(address=contract_address, abi=abi)
+                            if claim_data:
+                                #contract_address = Web3.to_checksum_address(claim_data['contractAddress'])
+                                #abi = claim_data['abi']
+                                #contract = w3.eth.contract(address=contract_address, abi=abi)
 
-                            amount = int(claim_data['amount'])
-                            merkle_proof = claim_data['proof']
-                            signature = claim_data['signature']
+                                amount = int(claim_data['amount'])
+                                merkle_proof = claim_data['proof']
+                                signature = claim_data['signature']
 
-                            try:
-                                tx = claim_contract.functions.claim(amount, merkle_proof, signature).build_transaction({
-                                    'from': address,
-                                    'nonce': w3.eth.get_transaction_count(address),
-                                    'maxFeePerGas': w3.eth.max_priority_fee + (2 * w3.eth.get_block('latest')['baseFeePerGas']), 
-                                    'maxPriorityFeePerGas': w3.eth.max_priority_fee, 
-                                })
 
-                                signed_tx = w3.eth.account.sign_transaction(tx, private_key)
-                                tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
-                                log(f"Транзакция отправлена: {tx_hash.hex()}")
+                                try:
+                                    tx = claim_contract.functions.claim(amount, merkle_proof, signature).build_transaction({
+                                        'from': address,
+                                        'nonce': w3.eth.get_transaction_count(address),
+                                        'maxFeePerGas': w3.eth.max_priority_fee + (2 * w3.eth.get_block('latest')['baseFeePerGas']), 
+                                        'maxPriorityFeePerGas': w3.eth.max_priority_fee, 
+                                    })
 
-                                # Ожидание подтверждения транзакции
-                                tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
-                                if tx_receipt['status'] == 1:
-                                    log(f"Награды успешно заявлены для адреса {address}. Сумма: {amount}")
-                                    time.sleep(15)
-                                    need_too_sleep = True
-                                else:
-                                    log(f"Ошибка при заявлении наград: {tx_receipt}")
-                            except Exception as e:
-                                log(f"Ошибка при вызове функции claim: {e}") 
+                                    signed_tx = w3.eth.account.sign_transaction(tx, private_key)
+                                    tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+                                    log(f"Транзакция отправлена: {tx_hash.hex()}")
+
+                                    # Ожидание подтверждения транзакции
+                                    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+                                    if tx_receipt['status'] == 1:
+                                        log(f"Награды успешно заявлены для адреса {address}. Сумма: {amount}")
+                                        time.sleep(15)
+                                        need_too_sleep = True
+                                    else:
+                                        log(f"Ошибка при заявлении наград: {tx_receipt}")
+                                except Exception as e:
+                                    log(f"Ошибка при вызове функции claim: {e}")
+                            else:
+                                log("Адрес не достоен награды")
+
                         else:
                             log(f'Error getting credentials data: {response.text if response else "No response"}')
                     else:
