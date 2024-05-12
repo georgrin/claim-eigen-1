@@ -2,6 +2,7 @@
 config.py
 pk.txt
 proxies.txt
+shit/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
